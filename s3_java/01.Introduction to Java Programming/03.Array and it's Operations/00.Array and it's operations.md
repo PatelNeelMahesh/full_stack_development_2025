@@ -19,6 +19,23 @@ Or declare and initialize simultaneously:
 int[] numbers = {10, 20, 30, 40, 50};
 ```
 
+**Step-by-Step Visual Explanation:**
+
+When declaring:
+
+
+| Step | Action | Explanation |
+| :-- | :-- | :-- |
+| 1 | `int[] numbers;` | Declare a variable `numbers` that will hold an int array reference. |
+| 2 | `numbers = new int[5];` | Allocate memory for 5 integer elements. Memory reserved, each element defaults to 0. |
+
+When initializing with values:
+
+
+| Index | 0 | 1 | 2 | 3 | 4 |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Value | 10 | 20 | 30 | 40 | 50 |
+
 
 ***
 
@@ -31,40 +48,45 @@ int first = numbers[0];  // Get element at index 0 (10)
 numbers[2] = 35;         // Set element at index 2 to 35
 ```
 
-
-***
-
-## Visual Representation: Array Structure and Indexing
-
-Suppose we have:
-
-```java
-int[] numbers = {10, 20, 30, 40, 50};
-```
-
-This array is stored in memory as:
+**Step-by-Step Visual Explanation:**
 
 
 | Index | 0 | 1 | 2 | 3 | 4 |
 | :-- | :-- | :-- | :-- | :-- | :-- |
 | Value | 10 | 20 | 30 | 40 | 50 |
 
-- `numbers` accesses `10`
-- `numbers` accesses `30`
-- Trying to access `numbers` will cause `ArrayIndexOutOfBoundsException` as valid indices are 0 to 4.
+- Step 1: Access `numbers` → reads `10`.
+- Step 2: Write `numbers = 35` → updates value at index 2.
+
+Resulting array:
+
+
+| Index | 0 | 1 | 2 | 3 | 4 |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Value | 10 | 20 | 35 | 40 | 50 |
+
 
 ***
 
 ## Array Properties
 
-- **Fixed Size:** Cannot resize an array once created.
-- **Length Property:** You can get the size of the array using `array.length`.
+- **Fixed Size:** Arrays cannot be resized after creation.
+- **Length property:** Get size using `array.length`, e.g., `numbers.length`.
 
 Example:
 
 ```java
 System.out.println("Array length: " + numbers.length);  // Output: 5
 ```
+
+**Step-by-Step Visual Explanation:**
+
+
+| Step | Description |
+| :-- | :-- |
+| 1 | JVM stores array length internally. |
+| 2 | `numbers.length` retrieves this value quickly without iteration. |
+| 3 | Returns 5 for the example array. |
 
 
 ***
@@ -79,13 +101,17 @@ for (int i = 0; i < numbers.length; i++) {
 }
 ```
 
-Visual:
+**Step-by-Step Visual Representation:**
 
 
-| i (index) ⇨ 0 | 1 | 2 | 3 | 4 |
-| :-- | :-- | :-- | :-- | :-- |
-| numbers[i] ⇨ 10 | 20 | 30 | 40 | 50 |
+| i (index) | 0 | 1 | 2 | 3 | 4 |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| numbers[i] | 10 | 20 | 35 | 40 | 50 |
 
+- Step 1: Initialize `i=0`.
+- Step 2: Check `i < numbers.length` (5).
+- Step 3: Access and print `numbers[i]`.
+- Step 4: Increment `i` and repeat until `i` reaches 5.
 
 ***
 
@@ -97,36 +123,44 @@ for (int num : numbers) {
 }
 ```
 
-Visual = sequential iteration over elements:
+Visual:
 
 ```
-10 → 20 → 30 → 40 → 50
+10 → 20 → 35 → 40 → 50
 ```
 
+- Step 1: Iterates sequentially over each element.
+- Step 2: Assigns current element to `num`.
+- Step 3: Prints `num`.
+- Step 4: Continues until all elements are processed.
 
 ***
 
 ## Default Initialization
 
-When you create an array with `new`, elements set to default value:
+When creating arrays with `new`, elements are set to default values:
 
 ```java
-int[] arr = new int[3];  // [0, 0, 0]
-boolean[] flags = new boolean[3];  // [false, false, false]
-String[] strs = new String[3];  // [null, null, null]
+int[] arr = new int[3];          // [0, 0, 0]
+boolean[] flags = new boolean[3]; // [false, false, false]
+String[] strs = new String[3];    // [null, null, null]
 ```
 
-Visual for `int[] arr = new int`:
+**Step-by-Step Visual Explanation for `int[] arr = new int;`:**
 
 
 | Index | 0 | 1 | 2 |
 | :-- | :-- | :-- | :-- |
 | Value | 0 | 0 | 0 |
 
+- Step 1: JVM allocates memory for 3 integers.
+- Step 2: Each element is set to Java’s int default value, `0`.
 
 ***
 
-## Copying Arrays with `System.arraycopy` Example
+## Copying Arrays with `System.arraycopy`
+
+Example:
 
 ```java
 int[] source = {1, 2, 3};
@@ -134,7 +168,7 @@ int[] dest = new int[3];
 System.arraycopy(source, 0, dest, 0, source.length);
 ```
 
-Visual:
+**Step-by-Step Visual Explanation:**
 
 Before copy:
 
@@ -150,21 +184,24 @@ After copy:
 | :-- | :-- | :-- | :-- |
 | dest | 1 | 2 | 3 |
 
+- Step 1: Copy elements from `source` starting at index 0.
+- Step 2: Paste elements into `dest` starting at index 0.
+- Step 3: Copy length equals `source.length`.
+- Step 4: `dest` array now holds a copy of `source`.
 
 ***
 
 ## Sorting Arrays in Java
 
-Sorting is the process of arranging elements in a particular order — usually ascending or descending. Java’s `Arrays` utility class provides a built-in method `sort()` to quickly sort arrays efficiently.
+Java provides `Arrays.sort()` for efficient sorting.
 
 ***
 
 ### How `Arrays.sort()` Works
 
-- The method uses an optimized sorting algorithm (Dual-Pivot Quicksort for primitive types).
-- It sorts the array **in-place**, meaning the original array is modified.
-- Time complexity is on average  O(n log n) , making it efficient for most use cases.
-- Supports both primitive and object arrays (objects are sorted using their natural ordering or a custom comparator).
+- Uses **Dual-Pivot Quicksort** for primitives.
+- Sorts **in-place**, modifying the original array.
+- Average time complexity: O(n log n).
 
 ***
 
@@ -174,17 +211,13 @@ Sorting is the process of arranging elements in a particular order — usually a
 import java.util.Arrays;
 
 public class ArraySortExample {
-
     public static void main(String[] args) {
-        int[] data = {45, 12, 9, 76};  // Unsorted array
+        int[] data = {45, 12, 9, 76};
 
         System.out.println("Before sorting: " + Arrays.toString(data));
-
-        Arrays.sort(data);  // Sorts array in ascending order
-
+        Arrays.sort(data);
         System.out.println("After sorting: " + Arrays.toString(data));
 
-        // Display sorted elements
         System.out.print("Sorted elements: ");
         for (int num : data) {
             System.out.print(num + " ");
@@ -193,7 +226,7 @@ public class ArraySortExample {
 }
 ```
 
-**Output:**
+Output:
 
 ```
 Before sorting: [45, 12, 9, 76]
@@ -206,14 +239,14 @@ Sorted elements: 9 12 45 76
 
 ### Visual Representation of Sorting
 
-Initial unsorted array:
+Before sort:
 
 
 | Index | 0 | 1 | 2 | 3 |
 | :-- | :-- | :-- | :-- | :-- |
 | Value | 45 | 12 | 9 | 76 |
 
-After sorting with `Arrays.sort()`:
+After sort:
 
 
 | Index | 0 | 1 | 2 | 3 |
@@ -225,14 +258,7 @@ After sorting with `Arrays.sort()`:
 
 ## Multidimensional Arrays in Java
 
-A **multidimensional array** is simply an array of arrays. The most common multidimensional array is a 2D array, which can be visualized as a table or matrix — rows and columns.
-
-In Java, a 2D array is declared as:
-
-```java
-int[][] matrix;
-```
-
+Multidimensional arrays are arrays of arrays, e.g., 2D arrays as matrices.
 
 ***
 
@@ -245,20 +271,6 @@ int[][] matrix = {
 };
 ```
 
-- The matrix consists of **2 rows** and **3 columns**.
-- Each row is itself an array with elements.
-
-***
-
-### Accessing Elements in 2D Arrays
-
-Access elements by specifying row and column indices:
-
-```java
-int value = matrix[1][2];  // Accesses 3rd element of 2nd row → 6
-System.out.println(value);  // Output: 6
-```
-
 
 ***
 
@@ -266,18 +278,26 @@ System.out.println(value);  // Output: 6
 
 |  | 0 | 1 | 2 |
 | :-- | :-- | :-- | :-- |
-| **Row 0** | 1 | 2 | 3 |
-| **Row 1** | 4 | 5 | 6 |
+| Row 0 | 1 | 2 | 3 |
+| Row 1 | 4 | 5 | 6 |
 
-- `matrix = 1`
-- `matrix = 3`
-- `matrix = 6`
+
+***
+
+### Accessing Elements in 2D Arrays
+
+```java
+int value = matrix[1][2];  // 6
+System.out.println(value);
+```
+
+- Step 1: Access row 1 (`{4,5,6}`).
+- Step 2: Access column 2 in row 1 (`6`).
+- Step 3: Value `6` printed.
 
 ***
 
 ### Iterating Over 2D Arrays
-
-Using nested loops:
 
 ```java
 for (int row = 0; row < matrix.length; row++) {
@@ -298,18 +318,7 @@ Output:
 
 ***
 
-### Rich Explanation: Applications of Multidimensional Arrays
-
-- Representing grids (e.g., game boards, maps)
-- Storing matrices for mathematics and engineering
-- Handling tabular data such as spreadsheets or tables
-- Working with images represented as pixel arrays (rows and columns)
-
-***
-
 ### Real-World Example: Matrix Addition
-
-Given two matrices of the same size, their sum is created by element-wise addition:
 
 ```java
 int[][] matrix1 = {
@@ -345,5 +354,10 @@ Output:
 8 10 12 
 14 16 18 
 ```
+
+- Step 1: Initialize matrices.
+- Step 2: Iterate elements, add corresponding positions.
+- Step 3: Store sums in new matrix.
+- Step 4: Print summed matrix.
 
 ***
